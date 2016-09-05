@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="phoneisure.domain.model.policyfee.PolicyFee" table="t_policy_fee" lazy="true">
+        <id name="id" type="java.lang.String" column="id" unsaved-value="null" length="32">
+            <generator class="uuid"/>
+        </id>
+
+        <version column="version" name="version" type="java.lang.Integer"/>
+
+        <property name="createDate" column="create_date" type="java.util.Date"/>
+
+        <many-to-one name="phoneBrand" column="phone_brand_id" class="phoneisure.domain.model.phonebrand.PhoneBrand"/>
+
+        <property name="phoneModel" column="phone_model" type="java.lang.String"/>
+
+        <property name="policyFee" column="policy_fee" type="java.math.BigDecimal"/>
+
+        <property name="policyMoney" column="policy_money" type="java.math.BigDecimal"/>
+
+        <property name="sort" column="sort" type="java.lang.Integer"/>
+
+        <property name="status" column="status">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">phoneisure.core.enums.EnableStatus</param>
+                <param name="type">4</param>
+            </type>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="phoneisure.domain.model.policy.Policy" table="t_policy" lazy="true">
+        <id name="id" type="java.lang.String" column="id" unsaved-value="null" length="32">
+            <generator class="uuid"/>
+        </id>
+
+        <version column="version" name="version" type="java.lang.Integer"/>
+
+        <property name="createDate" column="create_date" type="java.util.Date"/>
+
+        <property name="policyNo" column="policy_no" type="java.lang.String"/>
+        <many-to-one name="merchant" column="merchant_id" class="phoneisure.domain.model.merchant.Merchant"/>
+        <property name="phoneModel" column="phone_model" type="java.lang.String"/>
+        <property name="policyFee" column="policy_fee" type="java.math.BigDecimal"/>
+        <property name="policyMoney" column="policy_money" type="java.math.BigDecimal"/>
+        <property name="insuredName" column="insured_name" type="java.lang.String"/>
+        <property name="insuredPhone" column="insured_phone" type="java.lang.String"/>
+        <bag name="insuredBeginPicture" cascade="all">
+            <key column="policy_begin_id"/>
+            <one-to-many class="phoneisure.domain.model.picture.Picture"/>
+        </bag>
+        <bag name="insuredAfterPicture" cascade="all">
+            <key column="policy_after_id"/>
+            <one-to-many class="phoneisure.domain.model.picture.Picture"/>
+        </bag>
+        <many-to-one name="idType" column="id_type_id" class="phoneisure.domain.model.idtype.IdType"/>
+        <property name="idNumber" column="id_number" type="java.lang.String"/>
+        <property name="insuredBeginDate" column="insured_begin_date" type="java.util.Date"/>
+        <property name="insuredEndDate" column="insured_end_date" type="java.util.Date"/>
+        <property name="policyStatus" column="policy_status">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">phoneisure.core.enums.PolicyStatus</param>
+                <param name="type">4</param>
+            </type>
+        </property>
+        <property name="IMEI" column="imei" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>

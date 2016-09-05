@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="phoneisure.domain.model.recharge.Recharge" table="t_recharge" lazy="true">
+        <id name="id" type="java.lang.String" column="id" unsaved-value="null" length="32">
+            <generator class="uuid"/>
+        </id>
+
+        <version column="version" name="version" type="java.lang.Integer"/>
+
+        <property name="createDate" column="create_date" type="java.util.Date"/>
+
+        <property name="rechargeNo" column="recharge_no" type="java.lang.String"/>
+        <many-to-one name="merchant" column="merchant_id" class="phoneisure.domain.model.merchant.Merchant"/>
+        <property name="rechargeMoney" column="recharge_money" type="java.math.BigDecimal"/>
+        <property name="ipAddress" column="ip_address" type="java.lang.String"/>
+        <property name="payDate" column="pay_date" type="java.util.Date"/>
+        <property name="payType" column="pay_type">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">phoneisure.core.enums.PayType</param>
+                <param name="type">4</param>
+            </type>
+        </property>
+        <property name="payNo" column="pay_no" type="java.lang.String"/>
+        <property name="isPay" column="is_pay">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">phoneisure.core.enums.YesOrNoStatus</param>
+                <param name="type">4</param>
+            </type>
+        </property>
+    </class>
+</hibernate-mapping>

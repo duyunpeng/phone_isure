@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="none">
+    <class name="phoneisure.domain.model.account.Account" table="t_account" lazy="true">
+        <id name="id" type="java.lang.String" column="id" unsaved-value="null" length="32">
+            <generator class="uuid"/>
+        </id>
+
+        <version column="version" name="version" type="java.lang.Integer"/>
+
+        <property name="createDate" column="create_date" type="java.util.Date"/>
+
+        <property name="userName" column="user_name" type="java.lang.String"/>
+
+        <property name="password" column="password" type="java.lang.String"/>
+
+        <property name="salt" column="salt" type="java.lang.String"/>
+
+        <property name="lastLoginIP" column="last_login_ip" type="java.lang.String"/>
+
+        <property name="lastLoginDate" column="last_login_date" type="java.util.Date"/>
+
+        <property name="lastLoginPlatform" column="last_login_platform" type="java.lang.String"/>
+
+        <bag name="roles" lazy="extra" table="t_account_role" cascade="save-update">
+            <key column="account_id"/>
+            <many-to-many class="phoneisure.domain.model.role.Role" column="role_id"/>
+        </bag>
+
+        <many-to-one name="appKey" column="app_key_id" class="phoneisure.domain.model.appkey.AppKey"/>
+
+        <many-to-one name="headPic" column="head_pic_id" class="phoneisure.domain.model.picture.Picture"/>
+
+        <property name="status" column="status">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">phoneisure.core.enums.EnableStatus</param>
+                <param name="type">4</param>
+            </type>
+        </property>
+
+        <property name="email" column="email" type="java.lang.String"/>
+
+        <joined-subclass name="phoneisure.domain.model.merchant.Merchant" table="t_merchant">
+            <key column="account_id"/>
+            <property name="merchantName" column="merchant_name" type="java.lang.String"/>
+            <property name="contacts" column="contacts" type="java.lang.String"/>
+            <property name="contactsPhone" column="contacts_phone" type="java.lang.String"/>
+            <many-to-one name="area" column="area_id" class="phoneisure.domain.model.area.Area"/>
+            <property name="detailedArea" column="detailed_area" type="java.lang.String"/>
+            <property name="remarks" column="remarks" type="java.lang.String"/>
+            <property name="money" column="money" type="java.math.BigDecimal"/>
+            <property name="authStatus" column="auth_status">
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">phoneisure.core.enums.AuthStatus</param>
+                    <param name="type">4</param>
+                </type>
+            </property>
+            <property name="authFailureExplain" column="auth_failure_explain" type="java.lang.String"/>
+            <property name="userType" column="user_type">
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">phoneisure.core.enums.UserType</param>
+                    <param name="type">4</param>
+                </type>
+            </property>
+            <many-to-one name="agent" column="agent_id" class="phoneisure.domain.model.merchant.Merchant"/>
+        </joined-subclass>
+    </class>
+</hibernate-mapping>

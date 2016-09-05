@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="mappingService" class="phoneisure.core.mapping.MappingService"/>
+
+    <bean id="idFactory" class="phoneisure.core.commons.id.IdFactory" init-method="init">
+        <property name="prefix" value="${idFactory.prefix}"/>
+        <property name="suffixLength" value="${idFactory.suffixLength}"/>
+        <property name="sequenceAppService" ref="sequenceAppService"/>
+    </bean>
+
+    <bean id="apiRequestVerifyConfig" class="phoneisure.core.api.controller.ApiRequestVerifyConfig">
+        <property name="key" value="${apiRequestVerifyConfig.key}" />
+        <property name="secret" value="${apiRequestVerifyConfig.secret}" />
+    </bean>
+
+
+</beans>
